@@ -5,6 +5,14 @@
  */
 
 /**
+ * @callback ConverterFunction
+ * @param {Object} obj the object to set stuff to
+ * @param {PropertyDefinition} def the current definition
+ * @param {Object} prop the current property
+ * @returns {*}
+ */
+
+/**
  * @typedef {Object} PropertyDefinition
  * @property {String} name the name of the property
  * @property {String} typeof the type of the property (check with typeof)
@@ -12,6 +20,7 @@
  * @property {Boolean} required throws an error if this property is of a wrong type or not defined
  * @property {Boolean} cast if type is object and instanceof is not defined, casts, the object as the given class
  * @property {ValidatorFunction} validator a custom validator function called before all the others
+ * @property {ConverterFunction} converter a custom converter function called before setting the value
  */
 
 /**
@@ -38,24 +47,34 @@ function propdef(obj, propdef, props, options) {
     } 
 
     if(typeof def.typeof == 'string' && typeof props[def.name] == def.typeof) {
-      if(def.typeof == 'object' && typeof def.instanceof == 'function' && props[def.name] instanceof def.instanceof) {
-        // all is fine here, it will just skip out to the point where it can end the setting
-      } else if(typeof def.cast == 'function') {
-        try {
-          // cast, set and return afterwards
-          obj[def.name] = new def.cast(props[def.name]);
-          delete props[def.name];
-          return;
-        } catch (err) {
-          if(def.required) {
-            throw err;
+      if(def.typeof == 'object' && typeof def.instanceof == 'function') {
+        if(props[def.name] instanceof def.instanceof) {
+          // all is fine here, it will just skip out to the point where it can end the setting
+        } else if(typeof def.cast == 'function') {
+          try {
+            // cast, set and return afterwards
+            if(typeof def.converter == 'function') {
+              obj[def.name] = def.converter(obj, def, new def.cast(props[def.name]));
+            } else {
+              obj[def.name] = new def.cast(props[def.name]);
+            }
+            delete props[def.name];
+            return;
+          } catch (err) {
+            if(def.required) {
+              throw err;
+            }
           }
-        }
-      } if(def.required) throw new TypeError(`"${def.name}" was a required property, but it was either no object (it's type was ${typeof props[def.name]}) or it was not instance of ${def.instanceof.prototype.constructor.name}`);
+        } if(def.required) throw new TypeError(`"${def.name}" was a required property, but it was either no object (it's type was ${typeof props[def.name]}) or it was not instance of ${def.instanceof.prototype.constructor.name}`);
+      } 
     } else if(def.required) throw new TypeError(`"${def.name}" was a required property, but it's type ${typeof props[def.name]} did not match the required type ${def.typeof}`);
     
     // if anything was thrown until this point this won't be executed
-    obj[def.name] = props[def.name];
+    if(typeof def.converter == 'function') {
+      obj[def.name] = def.converter(obj, def, props[def.name]);
+    } else {
+      obj[def.name] = props[def.name];
+    }
     delete props[def.name];
     return;
   });

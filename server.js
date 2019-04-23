@@ -6,6 +6,8 @@ const app = express();
 
 cfg.handlebars(app);
 
+require('./app/routes')(app);
+
 app.listen(cfg.port, () => {
   log.v('server', 'listening on port', cfg.port);
 });

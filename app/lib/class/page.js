@@ -1,7 +1,7 @@
 const express = require('express');
 
 const PageHTML = require('./page-html');
-const PageOpengraph = require('page-opengraph');
+const PageOpengraph = require('./page-opengraph');
 
 const propdef = require('../propdef');
 
@@ -16,7 +16,7 @@ class Page {
    * @param {express.request} properties.req the express request for the route
    * @param {express.response} properties.res the express response for the route
    * @param {PageHTML} properties.html the settings for the delivered html
-   * @param {PageOpengraph.PageOpengraphProperties} properties.opengraph the opengraph settings for the delivered html
+   * @param {PageOpengraph} properties.opengraph the opengraph settings for the delivered html
    */
   constructor(properties) {
     propdef(this, [
@@ -30,7 +30,7 @@ class Page {
         instanceof: express.request,
         required: true,
       }, {
-        name: 'req',
+        name: 'res',
         typeof: 'object',
         instanceof: express.result,
         required: true

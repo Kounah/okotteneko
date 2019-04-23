@@ -1,2 +1,19 @@
+<!-- opengraph object -->
+<!-- {{{json this}}} -->
+
 <meta name="og:title" content="{{title}}" />
-<meta name="og:description" content="{{"
+{{#if description}}<meta name="og:description" content="{{description}}" />{{/if}}
+{{#if siteName}}<meta name="og:site_name" content="{{siteName}}" />{{/if}}
+<meta name="og:locale" content="{{locale}}" />
+{{#each localeAlternatives}}
+<meta name="og:locale:alternate" content="{{this}}" />
+{{/each}}
+{{#each audio}}
+{{> 'opengraph-audio' this}}
+{{/each}}
+{{#each video}}
+{{> 'opengraph-video' this}}
+{{/each}}
+{{#each image}}
+{{> 'opengraph-image' this}}
+{{/each}}
