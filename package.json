@@ -1,0 +1,28 @@
+{
+  "name": "okotteneko",
+  "version": "1.0.0",
+  "description": "okottenekos server backend",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.2",
+    "handlebars": "^4.1.2"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kounah/okotteneko.git"
+  },
+  "author": "Kounah",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/Kounah/okotteneko/issues"
+  },
+  "homepage": "https://github.com/Kounah/okotteneko#readme"
+}
