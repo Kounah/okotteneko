@@ -26,6 +26,7 @@ function router(app) {
 
   require('./api')(app);
   require('./sources')(app);
+  require('./build')(app);
 }
 
 module.exports = router;

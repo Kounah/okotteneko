@@ -1,4 +1,5 @@
 module.exports = {
   port: 9999,
-  handlebars: require('./handlebars')
+  maxCacheAge: (30 * 60 * 60 * 1000),
+  handlebars: require('./handlebars'),
 };

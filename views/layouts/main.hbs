@@ -14,9 +14,28 @@
 
   {{> 'opengraph' opengraph}}  
 
-  <title>{{title}}</title>
+  <title>{{title}} /// {{config 'siteName'}}</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Fresca" rel="stylesheet">
+  <link href="/build/materialize" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="/node_modules/materialize-css/dist/js/materialize.min.js"></script>
+  <script src="/src/init.js"></script>
 </head>
 <body>
-  {{{content}}}
+  <header>
+    {{> 'nav'}}
+  </header>
+
+  <main>
+    <div class="container">
+    {{{body}}}
+    </div>
+  </main>
+
+  <footer>
+
+  </footer>
 </body>
 </html>
